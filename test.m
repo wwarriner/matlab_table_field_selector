@@ -1,5 +1,5 @@
 %% WORKS
-t = readtable("data.csv");
+t = readtable("res/data.csv");
 config.metanames = ["x", "y"];
 c = select_table_fields(config, t);
 if isempty(c)
@@ -10,5 +10,5 @@ else
 end
 
 %% EMITS ERROR: not enough fields
-t = readtable("empty.csv");
+t = readtable("res/empty.csv");
 c = select_table_fields(config, t);
