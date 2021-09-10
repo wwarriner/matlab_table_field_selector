@@ -22,6 +22,8 @@ classdef TableFieldSelection < handle
         end
         
         function c = select(obj, t)
+            assert(0 < numel(obj.metanames));
+            
             cols = string(t.Properties.VariableNames);
             if ~isempty(intersect(cols, obj.default_selection))
                 error("table must not contain default_selection as a field");
