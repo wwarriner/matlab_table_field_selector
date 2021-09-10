@@ -146,6 +146,7 @@ classdef TableFieldSelection < handle
         
         function update_metaname_table(obj, t)
             fields = t.Properties.VariableNames;
+            fields = [obj.default_selection fields];
             obj.metaname_table_handle.CellEditCallback = @(varargin)obj.metaname_table_CellEditCallback(fields, varargin{:});
             obj.metaname_table_handle.ColumnFormat = {cellstr(fields)};
             obj.metaname_table_handle.Data = repmat(obj.default_selection, numel(obj.metanames), 1);
@@ -181,6 +182,7 @@ classdef TableFieldSelection < handle
         function metaname_table_CellEditCallback(obj, fields, src, ~)
             selected = obj.get_selections();
             available_cols = setdiff(fields, selected, "stable");
+            available_cols = [obj.default_selection available_cols];
             available_cols = cellstr(available_cols);
             src.ColumnFormat = {available_cols};
 
