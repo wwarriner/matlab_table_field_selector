@@ -1,7 +1,11 @@
 classdef TableFieldSelection < handle
     properties
+        % required
         metanames(:,1) string
+        
+        % optional
         default_selection(:,1) string = "Double click here to select..."
+        metaname_table_width_fraction(1,1) double {mustBeFinite,mustBeReal,mustBeNonnegative,mustBeLessThanOrEqual(metaname_table_width_fraction,1.0)} = 0.5
     end
     
     methods
@@ -73,8 +77,6 @@ classdef TableFieldSelection < handle
         GUTTER = 6;
         BUTTON_W = 96;
         BUTTON_H = 26;
-        META_W_FRAC = 0.3;
-        PRE_W_FRAC = 1.0 - TableFieldSelection.META_W_FRAC;
     end
     
     methods (Access = private)
@@ -124,7 +126,7 @@ classdef TableFieldSelection < handle
             
             x = obj.GUTTER;
             y = obj.BUTTON_H + 2 * obj.GUTTER;
-            w = round(obj.FIGURE_W * obj.META_W_FRAC) - obj.GUTTER;
+            w = round(obj.FIGURE_W * obj.metaname_table_width_fraction) - obj.GUTTER;
             h = obj.FIGURE_H - 3 * obj.GUTTER - obj.BUTTON_H;
             t.Position = [x y w h];
         end
@@ -132,9 +134,10 @@ classdef TableFieldSelection < handle
         function [t, w] = build_preview_table(obj, f, left_w)
             t = uitable(f);
             
+            PRE_W_FRAC = 1.0 - obj.metaname_table_width_fraction;
             x = left_w + 2 * obj.GUTTER;
             y = obj.BUTTON_H + 2 * obj.GUTTER;
-            w = round(obj.FIGURE_W * obj.PRE_W_FRAC) - 2 * obj.GUTTER;
+            w = round(obj.FIGURE_W * PRE_W_FRAC) - 2 * obj.GUTTER;
             h = obj.FIGURE_H - 3 * obj.GUTTER - obj.BUTTON_H;
             t.Position = [x y w h];
         end
